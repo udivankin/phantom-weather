@@ -1,21 +1,57 @@
-#today {
+body, html {
+  background: #fff;
+  color: #000;
+  font: 36px sans-serif;
+  max-height: 800px;
+  max-width: 600px;
+}
 
+#title {
+  display: flex;
+}
+
+#title .city {
+  flex: 0 1 auto;
+  text-align: left;
+}
+
+#title .date {
+  flex: 1 0 auto;
+  text-align: right;
+}
+
+#today {
+  display: flex;
+}
+
+#today .icon {
+  flex: 0 1 auto;
+}
+
+#today .temperature {
+  flex: 1 0 auto;
 }
 
 #forecast {
+  display: flex;
+  justify-content: space-between;
+}
 
+#forecast > div {
+  flex: 0 1 auto;
 }
 
 .title {
 
 }
 
-.degree {
-
+.degrees {
+  display: inline-block;
 }
 
 .unit {
-
+  display: inline-block;
+  vertical-align: top;
 }
 
 .icon {
