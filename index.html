@@ -64,13 +64,9 @@
 
     function drawIcon(icon, left, top, size) {
       var img = new Image();
-
       img.onload = function() {
         ctx.drawImage(img, left, top, size || iconSizes.small, size || iconSizes.small);
       }
-
-      console.log(img.path);
-
       img.src = icon;
     }
 
@@ -124,15 +120,12 @@
       drawWind({ bearing: data.windBearing, speed: data.windSpeed }, 400, 270);
     }
 
-    $.get('weather.json', function(result) {
-      const response = JSON.parse(result);
-
+    $.get('weather.json', function(response) {
       drawCurrent(response.daily.data[0]);
       drawForecast(response.daily.data[1], 20);
       drawForecast(response.daily.data[2], 210);
       drawForecast(response.daily.data[3], 400);
     })
-
   })
 </script>
 </html>
