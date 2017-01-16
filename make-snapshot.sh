@@ -3,4 +3,4 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 cd $SCRIPTPATH
-phantomjs make-snapshot.js
+node index.js --config=config.json

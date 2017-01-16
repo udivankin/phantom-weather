@@ -1,2 +1,2 @@
 # phantom-weather
-Generate weather PNG-snapshot using PhantomJS (to be used as kindle wallpaper)
+Generate weather PNG-snapshot (to be used as kindle wallpaper)
