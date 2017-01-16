@@ -1,12 +1,16 @@
-  const config = require('config.json');
+  const config = require('./config.json');
+  const response = require('./weather.json');
   const Canvas = require('canvas');
+  const fs = require('fs');
+  const moment = require('moment');
+  const out = fs.createWriteStream(__dirname + '/snapshot.png');
   const Image = Canvas.Image;
   const canvas = new Canvas(600, 800);
+  const stream = canvas.pngStream();
 
-  const url = 'https://api.darksky.net/forecast/' + appId + '/' + lat + ',' + lon;
+  const url = 'https://api.darksky.net/forecast/' + config.appId + '/' + config.lat + ',' + config.lon;
   const exclude = 'minutely,hourly,alerts,flags';
   const units = '℃' // : '&#8457;'
-  const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
   const defaultTextBaseline = 'alphabetic';
   const iconSizes = {
@@ -73,7 +77,7 @@
       {
         high: Math.round(data.temperatureMax),
         low: Math.round(data.temperatureMin),
-        icon: './icons/' + iconMap[data.icon],
+        icon: __dirname + '/icons/' + iconMap[data.icon],
         date: moment.unix(data.time).format('dddd, Do'),
       },
       offset,
@@ -83,7 +87,7 @@
 
   function drawCurrent(data) {
     drawText(moment.unix(data.time).format('dddd, Do'), 40, 60, 32);
-    drawIcon('./icons/' + iconMap[data.icon], 0, 40, iconSizes.large);
+    drawIcon(__dirname + '/icons/' + iconMap[data.icon], 0, 40, iconSizes.large);
     drawText('High:', 400, 50, 20);
     drawTemp(Math.round(data.temperatureMax), 400, 50);
     drawText('Low:', 400, 160, 20);
@@ -93,9 +97,16 @@
   }
 
   // $.get('weather.json', function(response) {
-  //   drawCurrent(response.daily.data[0]);
-  //   drawForecast(response.daily.data[1], 20);
-  //   drawForecast(response.daily.data[2], 210);
-  //   drawForecast(response.daily.data[3], 400);
+     drawCurrent(response.daily.data[0]);
+     drawForecast(response.daily.data[1], 20);
+     drawForecast(response.daily.data[2], 210);
+     drawForecast(response.daily.data[3], 400);
   // })
-});
+
+  stream.on('data', function(chunk){
+    out.write(chunk);
+  });
+
+  stream.on('end', function(){
+    console.log('saved png');
+  });
