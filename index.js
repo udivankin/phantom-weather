@@ -22,18 +22,18 @@ const arrow = bearing => 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%223
 
 const iconMap = {
   'clear-day': 'clear.png',
-  'clear-night': 'clear-night.svg',
+  'clear-night': 'clear-night.png',
   rain: 'rain.png',
-  snow: 'snow.svg',
-  sleet: 'sleet.svg',
-  wind: 'wind.svg',
-  fog: 'fog.svg',
-  cloudy: 'cloudy.svg',
-  'partly-cloudy-day': 'partly-cloudy.svg',
-  'partly-cloudy-night': 'partly-cloudy-night.svg',
-  hail: 'sleet.svg',
-  thunderstorm: 'thunder.svg',
-  tornado: 'tornado.svg',
+  snow: 'snow.png',
+  sleet: 'sleet.png',
+  wind: 'wind.png',
+  fog: 'fog.png',
+  cloudy: 'cloudy.png',
+  'partly-cloudy-day': 'partly-cloudy.png',
+  'partly-cloudy-night': 'partly-cloudy-night.png',
+  hail: 'sleet.png',
+  thunderstorm: 'thunder.png',
+  tornado: 'tornado.png',
 };
 canvas.height = 800;
 canvas.width = 600;
