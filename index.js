@@ -1,9 +1,9 @@
 const config = require('./config.json');
-const Canvas =require('canvas');
+const Canvas = require('canvas');
 const fs = require('fs');
 const moment = require('moment');
 const DarkSky = require('dark-sky');
-const out = fs.createWriteStream(__dirname + '/snapshot.png');
+const pngStream = fs.createWriteStream(__dirname + '/snapshot.png');
 const Image = Canvas.Image;
 const canvas = new Canvas(600, 800);
 const ctx = canvas.getContext('2d');
@@ -99,15 +99,15 @@ function renderWeather(response) {
   drawForecast(response.daily.data[1], 20);
   drawForecast(response.daily.data[2], 210);
   drawForecast(response.daily.data[3], 400);
-
-  stream.on('data', function(chunk){
-   out.write(chunk);
-  });
-
-  stream.on('end', function(){
-   console.log('saved png');
-  });
 }
+
+stream.on('data', function(chunk){
+  pngStream.write(chunk);
+});
+
+stream.on('end', function(){
+  console.log('Saved png OK');
+});
 
 forecast
   .latitude(config.lat)
@@ -116,8 +116,8 @@ forecast
   .exclude(config.exclude)
   .get()
   .then(response => {
-    fs.writeFile(__dirname + '/weather.json', JSON.stringify(response), 'utf8');
     renderWeather(response);
+    fs.writeFile(__dirname + '/weather.json', JSON.stringify(response), 'utf8');
   })
   .catch(err => {
     console.log(err)
