@@ -6,10 +6,12 @@ const DarkSky = require('dark-sky');
 const pngStream = fs.createWriteStream(__dirname + '/snapshot.png');
 const Image = Canvas.Image;
 const canvas = new Canvas(600, 800);
+canvas.height = 800;
+canvas.width = 600;
 const ctx = canvas.getContext('2d');
 const stream = canvas.pngStream();
 const forecast = new DarkSky(config.appId);
-const units = '℃' // : '&#8457;'
+const units = '℃'; // : '&#8457;'
 const defaultTextBaseline = 'alphabetic';
 
 const arrow = bearing => 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20transform%3D%22rotate(' + bearing + '%2C%2016%2C%2016)%22%20d%3D%22M18%2028V8.8l4.62%204.62c.4.4.86.58%201.38.58.98%200%202-.8%202-2%200-.53-.2-1-.58-1.38l-7.96-7.96C17.13%202.33%2016.73%202%2016%202s-1.08.28-1.45.65l-7.97%207.97c-.4.4-.58.85-.58%201.38%200%201.2%201.02%202%202%202%20.52%200%201-.2%201.38-.58L14%208.8V28c0%201.1.9%202%202%202s2-.9%202-2z%22%2F%3E%3C%2Fsvg%3E';
@@ -109,6 +111,9 @@ stream.on('end', function(){
   console.log('Saved png OK');
 });
 
+const weather = require('./weather.json');
+renderWeather(weather);
+
 forecast
   .latitude(config.lat)
   .longitude(config.lon)
@@ -116,7 +121,6 @@ forecast
   .exclude(config.exclude)
   .get()
   .then(response => {
-    renderWeather(response);
     fs.writeFile(__dirname + '/weather.json', JSON.stringify(response), 'utf8');
   })
   .catch(err => {
