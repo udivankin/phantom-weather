@@ -3,4 +3,4 @@ SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 cd $SCRIPTPATH
-node index.js --config=config.json
+node index.js

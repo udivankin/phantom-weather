@@ -1,4 +1,4 @@
-const config = require('./config.json');
+const config = require(__dirname + '/config.json');
 const Canvas = require('canvas');
 const fs = require('fs');
 const moment = require('moment');
@@ -111,8 +111,9 @@ stream.on('end', function(){
   console.log('Saved png OK');
 });
 
-const weather = require('./weather.json');
-renderWeather(weather);
+if (fs.existsSync(__dirname + '/weather.json')){
+  renderWeather(JSON.parse(fs.readFileSync(__dirname + '/weather.json')));
+}
 
 forecast
   .latitude(config.lat)
